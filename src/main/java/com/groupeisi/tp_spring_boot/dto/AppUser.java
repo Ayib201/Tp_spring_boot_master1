@@ -1,10 +1,10 @@
 package com.groupeisi.tp_spring_boot.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
