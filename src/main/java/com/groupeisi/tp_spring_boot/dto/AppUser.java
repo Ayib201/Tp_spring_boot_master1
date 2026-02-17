@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class AppUser {
-    private int id;
+    private Integer id;
     @NotNull(message = "Le nom ne doit pas etre null")
     private String nom;
     @NotNull(message = "Le prenom ne doit pas etre null")
