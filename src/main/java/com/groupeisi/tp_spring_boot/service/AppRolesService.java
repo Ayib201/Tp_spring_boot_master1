@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 @CacheConfig(cacheNames = "roles")
@@ -35,7 +34,7 @@ public class AppRolesService {
     public List<AppRoles>  getAppRoles() {
         return iAppRolesRepository.findAll().stream()
                 .map(appRolesMapper::toAppRoles)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Cacheable(key = "#id")

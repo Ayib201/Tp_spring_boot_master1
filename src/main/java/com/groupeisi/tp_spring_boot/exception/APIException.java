@@ -2,16 +2,16 @@ package com.groupeisi.tp_spring_boot.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class APIException {
-    String message;
-    HttpStatus status;
-    LocalDateTime timestamp;
+public class APIException extends Exception {
+    private final String message;
+    private final HttpStatus status;
+    private final LocalDateTime timestamp;
 }
