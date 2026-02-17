@@ -16,51 +16,50 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 @CacheConfig(cacheNames = "users")
 
 public class ProduitService {
     private final IProduitRepository iProduitRepository;
-    private final ProduitMapper ProduitMapper;
+    private final ProduitMapper produitMapper;
     MessageSource messageSource;
 
-    public ProduitService(IProduitRepository iProduitRepository, ProduitMapper ProduitMapper, MessageSource messageSource) {
+    public ProduitService(IProduitRepository iProduitRepository, ProduitMapper produitMapper, MessageSource messageSource) {
         this.iProduitRepository = iProduitRepository;
-        this.ProduitMapper = ProduitMapper;
+        this.produitMapper = produitMapper;
         this.messageSource = messageSource;
     }
 
     @Transactional(readOnly = true)
     public List<Produit> getProduit() {
         return iProduitRepository.findAll().stream()
-                .map(ProduitMapper::toProduit)
-                .collect(Collectors.toList());
+                .map(produitMapper::toProduit)
+                .toList();
     }
 
     @Cacheable(key = "#id")
     @Transactional(readOnly = true)
     public Produit getProduit(int id) {
-        return ProduitMapper.toProduit(iProduitRepository.findById(id)
+        return produitMapper.toProduit(iProduitRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(messageSource.getMessage("role.notfound", new Object[]{id},
                                 Locale.getDefault()))));
     }
 
     @Transactional
-    public Produit createProduit(Produit Produit) {
-        return ProduitMapper.toProduit(iProduitRepository.save(ProduitMapper.fromProduit(Produit)));
+    public Produit createProduit(Produit produit) {
+        return produitMapper.toProduit(iProduitRepository.save(produitMapper.fromProduit(produit)));
     }
 
     @CachePut(key = "#id")
     @Transactional
-    public Produit updateProduit(int id, Produit Produit) {
+    public Produit updateProduit(int id, Produit produit) {
         return iProduitRepository.findById(id)
                 .map(entity -> {
-                    Produit.setId(id);
-                    return ProduitMapper.toProduit(
-                            iProduitRepository.save(ProduitMapper.fromProduit(Produit)));
+                    produit.setId(id);
+                    return produitMapper.toProduit(
+                            iProduitRepository.save(produitMapper.fromProduit(produit)));
                 }).orElseThrow(() -> new EntityNotFoundException(messageSource.getMessage("role.notfound", new Object[]{id},
                         Locale.getDefault())));
     }

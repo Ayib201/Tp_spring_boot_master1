@@ -5,8 +5,6 @@ import com.groupeisi.tp_spring_boot.dto.AppUser;
 import com.groupeisi.tp_spring_boot.exception.EntityNotFoundException;
 import com.groupeisi.tp_spring_boot.exception.RequestException;
 import com.groupeisi.tp_spring_boot.mapping.AppUserMapper;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -18,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 @Service
 @CacheConfig(cacheNames = "users")
 public class AppUserService {
@@ -35,7 +32,7 @@ public class AppUserService {
     public List<AppUser> getAppUser() {
         return iAppUserRepository.findAll().stream()
                 .map(appUserMapper::toAppUser)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Cacheable(key = "#id")
@@ -48,18 +45,18 @@ public class AppUserService {
     }
 
     @Transactional
-    public AppUser createAppUser(AppUser AppUser) {
-        return appUserMapper.toAppUser(iAppUserRepository.save(appUserMapper.fromAppUser(AppUser)));
+    public AppUser createAppUser(AppUser appUser) {
+        return appUserMapper.toAppUser(iAppUserRepository.save(appUserMapper.fromAppUser(appUser)));
     }
 
     @CachePut(key = "#id")
     @Transactional
-    public AppUser updateAppUser(int id, AppUser AppUser) {
+    public AppUser updateAppUser(int id, AppUser appUser) {
         return iAppUserRepository.findById(id)
                 .map(entity -> {
-                    AppUser.setId(id);
+                    appUser.setId(id);
                     return appUserMapper.toAppUser(
-                            iAppUserRepository.save(appUserMapper.fromAppUser(AppUser)));
+                            iAppUserRepository.save(appUserMapper.fromAppUser(appUser)));
                 }).orElseThrow(() -> new EntityNotFoundException(messageSource.getMessage("role.notfound", new Object[]{id},
                         Locale.getDefault())));
     }
