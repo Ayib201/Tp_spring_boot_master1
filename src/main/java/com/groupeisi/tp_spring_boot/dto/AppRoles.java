@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class AppRoles {
-    private int id;
+    private Integer id;
     @NotNull(message = "Le nom ne doit pas etre null")
     private String nom;
 }
