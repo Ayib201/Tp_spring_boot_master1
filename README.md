@@ -1,7 +1,3 @@
-# TP Spring Boot
-
-Application Spring Boot avec architecture en couches (Controller, Service, DAO), intégration MySQL, Redis et migration de base de données avec Flyway.
-
 ## Prérequis
 
 - **Java 17** ou supérieur
@@ -36,21 +32,12 @@ Application Spring Boot avec architecture en couches (Controller, Service, DAO),
 - **AssertJ 3.27.7** : Assertions fluides pour les tests
 - **H2 Database** : Base de données en mémoire pour les tests
 
-## Installation
-
-### 1. Cloner le projet
-
-```bash
-git clone <repository-url>
-cd tp_spring_boot
-```
-
-### 2. Préparer l'environnement avec docker
+### 1. Préparer l'environnement avec docker
 ```bash
 docker compose up
 ```
 
-### 3. Installation dépendances
+### 2. Installation dépendances
 
 ```bash
 mvn clean install
@@ -119,6 +106,9 @@ docker-compose up -d
 ## Points d'Accès
 
 - **Accueil** : `http://localhost:8080/`
+- **Gestion des roles api** : `http://localhost:8080/roles`
+- **Gestion des users api** : `http://localhost:8080/users`
+- **Gestion des products api** : `http://localhost:8080/products`
 - **Health Check** : `http://localhost:8080/actuator/health`
 - **Info App** : `http://localhost:8080/actuator/info`
 - **Métriques** : `http://localhost:8080/actuator/metrics`
@@ -145,6 +135,19 @@ src/main/
     └── db/migration/                      # Scripts Flyway
         └── V1__Init_db.sql               # Schéma initial
 ```
+## Test des api avec Bruno
+- Gestion des roles
+  ![Description](assets/roles/img.png)
+  ![Description](assets/roles/img_1.png)
+  ![Description](assets/roles/img_2.png)
+- Gestion des users
+  ![Description](assets/users/img.png)
+  ![Description](assets/users/img_1.png)
+  ![Description](assets/users/img_2.png)
+- Gestion des products
+  ![Description](assets/products/img.png)
+  ![Description](assets/products/img_1.png)
+  ![Description](assets/products/img_2.png)
 
 ## Exécuter les Tests
 
